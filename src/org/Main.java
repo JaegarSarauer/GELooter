@@ -25,8 +25,6 @@ import java.util.Map;
 
 
 public class Main extends Script {
-	
-	public long startTime = System.currentTimeMillis();
 
 	public Area GEArea = new Area(3144, 3512, 3182, 3472);
 
@@ -43,6 +41,7 @@ public class Main extends Script {
 	long itemCountPreviousToLoot;
 	
 	UI ui;
+	Paint paint;
 	
 	public Main() {
 		ignoreCheap = new HashMap<Integer, Integer>();
@@ -51,6 +50,7 @@ public class Main extends Script {
     @Override
     public void onStart() {
     		ui = new UI();
+    		paint = new Paint();
     }
 
     @Override
@@ -183,53 +183,11 @@ public class Main extends Script {
     		return check.getX() == object.getX() && check.getY() == object.getY();
     }
 
-    Font paintFont = new Font("Times New Roman", Font.PLAIN, 12);
     @Override
     public void onPaint(Graphics2D g) {
-    		Point p = mouse.getPosition();
-    		g.setFont(paintFont);
-    		g.setColor(Color.BLACK);
-    		g.fillRect(290, 340, 205, 108);
-    		g.setColor(Color.MAGENTA);
-    		g.drawOval(p.x, p.y, 3, 3);
-    		g.drawString("~ Apa's GE Looter ~", 295, 360);
-    		g.drawString("Runtime: " + calcRuntime(), 295, 380);
-		g.drawString("Loots: " + State.getInstance().loots + " (" + calcHourly(State.getInstance().loots) + ")", 295, 400);
-    		g.drawString("Profit: " + coolFormat(State.getInstance().totalProfit, 0) + " (" + coolFormat(calcHourly(State.getInstance().totalProfit), 0) + ")", 295, 420);
-    }
+    		paint.onPaint(g, mouse.getPosition(), itemToGet);
+	}
     
-    public int calcHourly(int v) {
-    		if (v == 0)
-    			return 0;
-    		return (int)((float)v / ((System.currentTimeMillis() - startTime) / 3600000f));
-    }
 
-    private static char[] c = new char[]{'k', 'm', 'b', 't'};
-
-    /**
-     * Recursive implementation, invokes itself for each factor of a thousand, increasing the class on each invokation.
-     * @param n the number to format
-     * @param iteration in fact this is the class from the array c
-     * @return a String representing the number n formatted in a cool looking way.
-     */
-    private static String coolFormat(double n, int iteration) {
-        double d = ((long) n / 100) / 10.0;
-        boolean isRound = (d * 10) %10 == 0;//true if the decimal part is equal to 0 (then it's trimmed anyway)
-        return (d < 1000? //this determines the class, i.e. 'k', 'm' etc
-            ((d > 99.9 || isRound || (!isRound && d > 9.99)? //this decides whether to trim the decimals
-             (int) d * 10 / 10 : d + "" // (int) d * 10 / 10 drops the decimal
-             ) + "" + c[iteration]) 
-            : coolFormat(d, iteration+1));
-
-    }
-    
-    public String calcRuntime() {
-    		int secsPassed = (int)((System.currentTimeMillis() - startTime) / 1000);
-    		int hours = secsPassed / 3600;
-    		secsPassed -= hours * 3600;
-    		int minutes = secsPassed / 60;
-    		secsPassed -= minutes * 60;
-    		return (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (secsPassed < 10 ? "0" + secsPassed : secsPassed);
-    }
 
 }

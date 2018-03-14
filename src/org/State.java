@@ -26,6 +26,8 @@ public class State {
 	/*
 	 * Data variables.
 	 */
+	//script start time
+	public static final long startTime = System.currentTimeMillis();
 	
 	//has/should script start?
 	public boolean startScript = false;
