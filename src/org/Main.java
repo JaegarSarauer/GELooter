@@ -38,8 +38,6 @@ public class Main extends Script {
 	
 	public int minRunAmount;
 	
-	RS2Object treeToChop;
-	
 	GroundItem itemToGet;
 	int itemToGetValue;
 	long itemCountPreviousToLoot;
@@ -53,7 +51,6 @@ public class Main extends Script {
     @Override
     public void onStart() {
     		ui = new UI();
-    		hasAcceptableAxe();
     }
 
     @Override
@@ -127,47 +124,7 @@ public class Main extends Script {
 		    }
     		}
     		
-    		if (!objectStillExists(treeToChop)) {
-    			log("need new tree");
-    			treeToChop = null;
-			State.getInstance().setWoodcuttingXP(skills.getExperience(Skill.WOODCUTTING));
-    		}
-    		   		
-    		if (treeToChop == null && !myPlayer.isMoving() && !myPlayer.isAnimating() && (State.getInstance().hasAcceptableAxe || hasAcceptableAxe())) {
-    			treeToChop = objects.closest(GEArea, "Tree");
-    			if (treeToChop != null) {
-    				if (treeToChop.getPosition().distance(myPlayer.getPosition()) < 14) {
-    					treeToChop.interact("Chop down");
-    				}
-    			}
-    		}
-    		
-        return (int)(Math.random() * 100) + 200;
-    }
-
-    public final int[] wcLevels = {1, 1, 6, 11, 21, 31, 41, 61};
-    public final int[] axes = {1351, 1349, 1353, 1361, 1355, 1357, 1359};
-    
-    @SuppressWarnings("unchecked")
-	public boolean hasAcceptableAxe() {
-    		int wcLevel = skills.getDynamic(Skill.WOODCUTTING);
-    		boolean hasAxe = inventory.contains(new Filter<Item>() {
-
-				@Override
-				public boolean match(Item item) {
-					int id = item.getId();
-					for (int i = 0; i < axes.length; i++) {
-						if (axes[i] == id) {
-							if (wcLevels[i] <= wcLevel)
-								return true;
-							else
-								return false;
-						}
-					}
-					return true;
-				}
-    		});
-    		return State.getInstance().hasAcceptableAxe = hasAxe;
+        return (int)(Math.random() * 100) + 100;
     }
     
     
@@ -239,7 +196,6 @@ public class Main extends Script {
     		g.drawString("Runtime: " + calcRuntime(), 295, 380);
 		g.drawString("Loots: " + State.getInstance().loots + " (" + calcHourly(State.getInstance().loots) + ")", 295, 400);
     		g.drawString("Profit: " + coolFormat(State.getInstance().totalProfit, 0) + " (" + coolFormat(calcHourly(State.getInstance().totalProfit), 0) + ")", 295, 420);
-    		g.drawString("Woodcutting XP: " + coolFormat(State.getInstance().woodcuttingXP, 0) + " (" + coolFormat(calcHourly(State.getInstance().woodcuttingXP), 0) + ")", 295, 440);
     }
     
     public int calcHourly(int v) {

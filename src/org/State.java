@@ -38,17 +38,4 @@ public class State {
 	
 	//total value acquired
 	public int totalProfit = 0;
-	
-	//do i have an axe i can use on me?
-	public boolean hasAcceptableAxe;
-	
-	//Starting woodcutting xp.
-	public int startWoodcuttingXP;
-	
-	//Woodcutting xp gained.
-	public int woodcuttingXP;
-    
-    public void setWoodcuttingXP(int curXP) {
-    		woodcuttingXP = curXP - startWoodcuttingXP;
-    }
 }
