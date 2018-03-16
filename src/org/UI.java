@@ -1,6 +1,7 @@
 package org;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -30,7 +31,6 @@ public class UI {
 		
 		JFrame frame = new JFrame("GE Looter - Config");
 	    frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-	    
 		JPanel namePanel = new JPanel();
 		
 		namePanel.add(new JLabel("Enter Minimum Item Price:"));
@@ -64,10 +64,19 @@ public class UI {
 		actionPanel.add(startButton);
 		
 		JPanel mainPanel = new JPanel();
+		Dimension d = new Dimension(500, 150);
+	    mainPanel.setSize(d);
+		mainPanel.setLayout(new FlowLayout());
+		mainPanel.add(new JLabel("Please support this script! Support will be used for further/new development."));
+		mainPanel.add(new JLabel("Paypal: apalapa@live.ca                                       OSBot (GP): apa"));
+		mainPanel.add(new JLabel("Ethereum: 0x3FBAa4462ab2F1A60b69BB9370432bEe5e768045"));
+		mainPanel.add(new JLabel("----------------------------------------------------"));
 		mainPanel.add(namePanel);
 		mainPanel.add(actionPanel);
 		
 		frame.add(mainPanel);
+		frame.setPreferredSize(d);
+		frame.setResizable(false);
 		frame.pack();
 		frame.setVisible(true);
         frame.setLocation(screenW / 2, screenH / 2);
