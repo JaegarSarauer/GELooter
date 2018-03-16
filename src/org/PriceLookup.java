@@ -8,14 +8,7 @@ public class PriceLookup {
 
 		private static final String BASE = "https://api.rsbuddy.com/grandExchange?a=guidePrice&i=";
 
-		public static PriceLookup instance;
-		
-		public static PriceLookup getInstance() {
-			if (PriceLookup.instance == null) {
-				PriceLookup.instance = new PriceLookup();
-			}
-			return PriceLookup.instance;
-		}
+		public static final PriceLookup i = new PriceLookup();
 		
 		private PriceLookup() {
 

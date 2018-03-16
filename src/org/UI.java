@@ -52,11 +52,11 @@ public class UI {
 		startButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				State.getInstance().startScript = !State.getInstance().startScript;
+				State.i.startScript = !State.i.startScript;
 				try {
-					State.getInstance().minimumValue = Integer.parseInt(minimumValueField.getText());
+					State.i.minimumValue = Integer.parseInt(minimumValueField.getText());
 				} catch (Exception ee) {
-					State.getInstance().minimumValue = 0;
+					State.i.minimumValue = 0;
 				}
 				frame.dispose();
 			}

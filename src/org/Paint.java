@@ -5,30 +5,29 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import org.osbot.rs07.api.model.GroundItem;
-
 public class Paint {
 
     Font paintFont = new Font("Times New Roman", Font.PLAIN, 12);
 
-    public void onPaint(Graphics2D g, Point mousePos, GroundItem itemToGet) {
+    public void onPaint(Graphics2D g, Point mousePos) {
 		g.setFont(paintFont);
 		g.setColor(Color.BLACK);
-		g.fillRect(290, 340, 205, 108);
+		g.fillRect(290, 340, 205, 128);
 		g.setColor(Color.MAGENTA);
 		g.drawOval(mousePos.x, mousePos.y, 3, 3);
 		g.drawString("~ Apa's GE Looter ~", 295, 360);
 		g.drawString("Runtime: " + calcRuntime(), 295, 380);
-		g.drawString("Loots: " + State.getInstance().loots + " (" + calcHourly(State.getInstance().loots) + ")", 295, 400);
-		g.drawString("Profit: " + coolFormat(State.getInstance().totalProfit, 0) + " (" + coolFormat(calcHourly(State.getInstance().totalProfit), 0) + ")", 295, 420);
-		if (itemToGet != null)
-			g.drawString("After Some " + itemToGet.getName() + " (" + itemToGet.getAmount() + ")", 295, 440);
+		g.drawString("Loots: " + State.i.loots + " (" + calcHourly(State.i.loots) + ")", 295, 400);
+		g.drawString("Profit: " + coolFormat(State.i.totalProfit, 0) + " (" + coolFormat(calcHourly(State.i.totalProfit), 0) + ")", 295, 420);
+		g.drawString("Currently " + State.i.state, 295, 440);
+		if (State.i.itemToGet != null)
+			g.drawString("After Some " + State.i.itemToGet.getName() + " (" + State.i.itemToGet.getAmount() + ")", 295, 460);
 	}
 
 	public int calcHourly(int v) {
 		if (v == 0)
 			return 0;
-		return (int)((float)v / ((System.currentTimeMillis() - State.startTime) / 3600000f));
+		return (int)((float)v / ((System.currentTimeMillis() - State.START_TIME) / 3600000f));
 	}
 	
 	private static char[] c = new char[]{'k', 'm', 'b', 't'};
@@ -51,7 +50,7 @@ public class Paint {
 	}
 	
 	public String calcRuntime() {
-		int secsPassed = (int)((System.currentTimeMillis() - State.startTime) / 1000);
+		int secsPassed = (int)((System.currentTimeMillis() - State.START_TIME) / 1000);
 		int hours = secsPassed / 3600;
 		secsPassed -= hours * 3600;
 		int minutes = secsPassed / 60;
